@@ -203,7 +203,7 @@ export default function Projects() {
 
               {/* Content */}
               <div className={`flex-1 ${i % 2 === 0 ? "md:pl-4" : "md:pr-4"}`}>
-                <p className="project-number text-5xl font-extrabold text-white/10 leading-none mb-2 select-none">
+                <p className="project-number text-5xl font-extrabold text-white/20 leading-none mb-2 select-none">
                   {project.number}
                 </p>
                 <h3 className="project-title text-xl font-bold text-white mb-4">{project.title}</h3>

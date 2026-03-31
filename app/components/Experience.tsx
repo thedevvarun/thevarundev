@@ -1,5 +1,4 @@
 import { useScrollReveal, useScrollProgress } from "../hooks/useScrollReveal";
-import Magnetic from "./Magnetic";
 import { useState, useRef } from "react";
 
 const experiences = [
@@ -152,8 +151,7 @@ export default function Experience() {
 
                   {/* Content Card */}
                   <div className={`w-full md:w-1/2 pl-12 md:pl-0 ${isEven ? "md:pr-12" : "md:pl-12"} exp-card-wrapper ${isEven ? "exp-left" : "exp-right"}`} style={{ perspective: "1000px" }}>
-                    <Magnetic strength={5}>
-                      <div className="exp-card border border-white/10 p-6 rounded-2xl bg-white/[0.03] backdrop-blur-md hover:border-indigo-500/50 transition-all duration-500 group hover:shadow-[0_0_40px_rgba(79,70,229,0.1)]">
+                      <div className="exp-card border border-white/10 p-6 rounded-2xl bg-white/[0.03] backdrop-blur-md transition-all duration-500 group">
                         <div className="flex items-start gap-4">
                           {exp.logo ? (
                             <img src={exp.logo} alt={exp.company} className="w-12 h-12 object-contain shrink-0 rounded-lg bg-white/5 p-1 border border-white/10 shadow-inner" />
@@ -164,13 +162,13 @@ export default function Experience() {
                           )}
                           <div className="flex-1 min-w-0">
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
-                              <span className="text-white font-bold text-lg tracking-tight group-hover:text-indigo-400 transition-colors">{exp.role}</span>
+                              <span className="text-white font-bold text-lg tracking-tight">{exp.role}</span>
                               <span className="text-gray-500 text-xs font-medium uppercase tracking-widest">{exp.period}</span>
                             </div>
                             <p className="text-gray-400 text-sm font-light mb-4">{exp.company}</p>
                             <ul className="flex flex-col gap-3">
                               {exp.bullets.map((bullet, j) => (
-                                <li key={j} className="text-gray-400 text-sm font-light flex gap-3 leading-relaxed group-hover:text-gray-300 transition-colors">
+                                <li key={j} className="text-gray-400 text-sm font-light flex gap-3 leading-relaxed">
                                   <span className="text-indigo-500 shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500/60 shadow-[0_0_8px_rgba(99,102,241,0.5)]"></span>
                                   {bullet}
                                 </li>
@@ -179,7 +177,6 @@ export default function Experience() {
                           </div>
                         </div>
                       </div>
-                    </Magnetic>
                   </div>
                 </div>
               );

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { useScrollReveal } from "../hooks/useScrollReveal";
-import Magnetic from "./Magnetic";
 
 const skills = [
   { name: "JavaScript", logo: "/skills/javascript.svg", color: "#F7DF1E" },
@@ -78,9 +77,8 @@ export default function Skills() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {skills.map((skill) => (
             <div key={skill.name} className="skill-card-wrapper" style={{ opacity: 0, transform: "translateY(60px) scale(0.7) rotateX(45deg)" }}>
-              <Magnetic strength={15}>
                 <div
-                  className="skill-card group border-2 rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-default bg-white border-gray-100"
+                  className="skill-card group border-2 rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-default bg-white border-gray-100 transition-all duration-300"
                   style={{ 
                     borderColor: "#f3f4f6", 
                   }}
@@ -91,23 +89,29 @@ export default function Skills() {
                     const anime = animeLib.current;
                     
                     if (anime) {
-                      // Card shadow & border
+                      // Remove any existing animations on these elements
+                      anime.remove(target);
+                      anime.remove(icon);
+                      anime.remove(text);
+
+                      // Card scale & shadow & border
                       anime({
                         targets: target,
                         borderColor: skill.color,
                         boxShadow: `0 20px 40px ${skill.color}22`,
+                        scale: 1.05,
                         duration: 400,
                         easing: "easeOutCubic"
                       });
 
                       // Icon elastic pop
                       if (icon) {
-                        icon.style.backgroundColor = skill.color;
                         anime({
                           targets: icon,
-                          scale: [1, 1.35],
-                          rotate: [0, 12],
-                          duration: 1000,
+                          backgroundColor: skill.color,
+                          scale: [1, 1.25],
+                          rotate: [0, 8],
+                          duration: 800,
                           easing: "easeOutElastic(1, .5)"
                         });
                       }
@@ -130,10 +134,15 @@ export default function Skills() {
                     const anime = animeLib.current;
 
                     if (anime) {
+                      anime.remove(target);
+                      anime.remove(icon);
+                      anime.remove(text);
+
                       anime({
                         targets: target,
                         borderColor: "#f3f4f6",
                         boxShadow: "0 0px 0px rgba(0,0,0,0)",
+                        scale: 1,
                         duration: 400,
                         easing: "easeOutCubic"
                       });
@@ -141,13 +150,11 @@ export default function Skills() {
                       if (icon) {
                         anime({
                           targets: icon,
+                          backgroundColor: "rgb(209 213 219)",
                           scale: 1,
                           rotate: 0,
                           duration: 600,
-                          easing: "easeOutCubic",
-                          complete: () => {
-                            icon.style.backgroundColor = "rgb(209 213 219)";
-                          }
+                          easing: "easeOutCubic"
                         });
                       }
 
@@ -180,7 +187,6 @@ export default function Skills() {
                     {skill.name}
                   </span>
                 </div>
-              </Magnetic>
             </div>
           ))}
         </div>
