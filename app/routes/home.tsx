@@ -1,13 +1,37 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+import Skills from "../components/Skills";
+import Experience from "../components/Experience";
+import About from "../components/About";
+import Projects from "../components/Projects";
+// import Testimonials from "../components/Testimonials";
+import Contact from "../components/Contact";
+import Footer from "../components/Footer";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Varun Dev Sharma" },
+    {
+      name: "description",
+      content:
+        "Multi-stack engineer experienced in building and scaling technology solutions from scratch.",
+    },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      <Skills />
+      <Experience />
+      <About />
+      <Projects />
+      {/* Testimonials section removed */}
+      <Contact />
+      <Footer />
+    </>
+  );
 }
