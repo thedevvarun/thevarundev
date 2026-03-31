@@ -20,7 +20,7 @@ export default function Navbar() {
 
         {/* Resume Button */}
         <a
-          href="/VarunResumev4.pdf"
+          href="/VarunResumev5.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:flex items-center gap-2 bg-black text-white text-sm font-semibold px-5 py-2.5 hover:bg-gray-800 transition-colors"
@@ -46,7 +46,7 @@ export default function Navbar() {
           <a href="#skills" className="text-gray-600 text-sm font-medium" onClick={() => setMenuOpen(false)}>Skills</a>
           <a href="#projects" className="text-gray-600 text-sm font-medium" onClick={() => setMenuOpen(false)}>Project</a>
           <a href="#contact" className="text-gray-600 text-sm font-medium" onClick={() => setMenuOpen(false)}>Contact Me</a>
-          <a href="/VarunResumev4.pdf" target="_blank" rel="noopener noreferrer" className="bg-black text-white text-sm font-medium px-4 py-2.5 text-center">
+          <a href="/VarunResumev5.pdf" target="_blank" rel="noopener noreferrer" className="bg-black text-white text-sm font-medium px-4 py-2.5 text-center">
             Resume
           </a>
         </div>

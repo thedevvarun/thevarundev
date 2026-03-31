@@ -37,28 +37,32 @@ function CursorInner() {
     };
 
     const onMouseOver = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("a, button, [data-cursor-hover]") && !hovering.current) {
+      const target = (e.target as HTMLElement).closest("a, button, [data-cursor-hover], .skill-card, .exp-card, .project-link, .magnetic");
+      if (target && !hovering.current) {
         hovering.current = true;
-        ringEl.style.width = "56px";
-        ringEl.style.height = "56px";
-        ringEl.style.opacity = "0.6";
-        dot.style.width = "4px";
-        dot.style.height = "4px";
+        ringEl.style.width = "64px";
+        ringEl.style.height = "64px";
+        ringEl.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+        ringEl.style.mixBlendMode = "difference";
+        ringEl.style.borderWidth = "0px";
+        dot.style.opacity = "0";
       }
     };
     const onMouseOut = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("a, button, [data-cursor-hover]") && hovering.current) {
+      const target = (e.target as HTMLElement).closest("a, button, [data-cursor-hover], .skill-card, .exp-card, .project-link, .magnetic");
+      if (target && hovering.current) {
         hovering.current = false;
         ringEl.style.width = "36px";
         ringEl.style.height = "36px";
-        ringEl.style.opacity = "1";
-        dot.style.width = "8px";
-        dot.style.height = "8px";
+        ringEl.style.backgroundColor = "transparent";
+        ringEl.style.mixBlendMode = "normal";
+        ringEl.style.borderWidth = "1.5px";
+        dot.style.opacity = "1";
       }
     };
 
-    const onMouseDown = () => { dot.style.transform += " scale(0.7)"; };
-    const onMouseUp = () => { dot.style.transform = dot.style.transform.replace(" scale(0.7)", ""); };
+    const onMouseDown = () => { ringEl.style.transform += " scale(0.85)"; };
+    const onMouseUp = () => { ringEl.style.transform = ringEl.style.transform.replace(" scale(0.85)", ""); };
 
     const tick = () => {
       // Lag ring

@@ -18,14 +18,35 @@ export function useScrollReveal(
     const el = ref.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
+    let animeLib: any = null;
+    let observer: IntersectionObserver;
+
+    // Resolve anime once at mount
+    import("animejs")
+      .then(({ default: anime }) => {
+        animeLib = anime;
+      })
+      .catch((err) => {
+        console.error("AnimeJS load failed in useScrollReveal:", err);
+        // Visual fallback if anime fails
+        (el as HTMLElement).style.opacity = "1";
+        (el as HTMLElement).style.transform = "none";
+      });
+
+    observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated.current) {
             if (options?.once !== false) hasAnimated.current = true;
-            import("animejs").then(({ default: anime }) => {
-              animate(anime as unknown as AnimeInstance, entry.target);
-            });
+            if (animeLib) {
+              animate(animeLib as unknown as AnimeInstance, entry.target);
+            } else {
+              // Fallback: If animeLib isn't ready when we intersect, try again briefly
+              setTimeout(() => {
+                if (animeLib) animate(animeLib as unknown as AnimeInstance, entry.target);
+                else (entry.target as HTMLElement).style.opacity = "1"; // ultimate fallback
+              }, 300);
+            }
           }
         });
       },

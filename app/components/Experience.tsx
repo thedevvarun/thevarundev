@@ -1,4 +1,6 @@
-import { useScrollReveal } from "../hooks/useScrollReveal";
+import { useScrollReveal, useScrollProgress } from "../hooks/useScrollReveal";
+import Magnetic from "./Magnetic";
+import { useState, useRef } from "react";
 
 const experiences = [
   {
@@ -56,32 +58,60 @@ const experiences = [
 ];
 
 export default function Experience() {
-  const ref = useScrollReveal((anime, el) => {
-    anime.set(el.querySelectorAll(".exp-title-char"), { translateY: "100%", opacity: 0 });
-    anime.set(el.querySelectorAll(".exp-card"), { opacity: 0, translateX: -40 });
+  const lineRef = useRef<HTMLDivElement>(null);
+  
+  // Custom scroll progress for the central line
+  const containerRef = useScrollProgress((ratio) => {
+    if (lineRef.current) {
+      lineRef.current.style.transform = `scaleY(${ratio})`;
+    }
+  });
 
+  const revealRef = useScrollReveal((anime, el) => {
+    // Initial states for dots and cards
+    anime.set(".exp-dot", { scale: 0 });
+    
     const tl = anime.timeline({ easing: "easeOutExpo" });
 
     tl.add({
       targets: el.querySelectorAll(".exp-title-char"),
-      translateY: ["100%", "0%"],
+      translateY: ["120%", "0%"],
+      rotateZ: [5, 0],
       opacity: [0, 1],
-      duration: 800,
+      duration: 1000,
       delay: anime.stagger(30),
     }).add({
-      targets: el.querySelectorAll(".exp-card"),
+      targets: el.querySelectorAll(".exp-card-wrapper"),
       opacity: [0, 1],
-      translateX: [-40, 0],
-      duration: 800,
-      delay: anime.stagger(120),
-      easing: "easeOutCubic",
-    }, "-=400");
+      translateX: (el: HTMLElement) => {
+        const isLeft = el.classList.contains("exp-left");
+        return isLeft ? [-50, 0] : [50, 0];
+      },
+      rotateY: (el: HTMLElement) => {
+        const isLeft = el.classList.contains("exp-left");
+        return isLeft ? [15, 0] : [-15, 0];
+      },
+      duration: 1200,
+      delay: anime.stagger(200),
+    }, "-=600").add({
+      targets: el.querySelectorAll(".exp-dot"),
+      scale: [0, 1],
+      duration: 600,
+      delay: anime.stagger(200),
+      easing: "easeOutElastic(1, .6)"
+    }, "-=1200");
   }, { threshold: 0.1 });
 
+  // Helper function to merge refs
+  const setRefs = (node: HTMLDivElement | null) => {
+    (containerRef as any).current = node;
+    (revealRef as any).current = node;
+  };
+
   return (
-    <section className="py-24 bg-black" ref={ref}>
-      <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-4xl text-white text-center mb-14 overflow-hidden">
+    <section id="experience" className="py-32 bg-black overflow-hidden" ref={setRefs}>
+      <div className="max-w-6xl mx-auto px-6 relative">
+        <h2 className="text-4xl text-white text-center mb-24 overflow-hidden">
           <span className="inline-block overflow-hidden">
             {"My ".split("").map((char, i) => (
               <span key={`a${i}`} className="exp-title-char inline-block font-light">
@@ -97,37 +127,64 @@ export default function Experience() {
             ))}
           </span>
         </h2>
-        <div className="flex flex-col gap-4">
-          {experiences.map((exp, i) => (
-            <div key={i} className="exp-card border border-white/10 p-6 rounded-lg hover:border-white/25 transition-colors">
-              <div className="flex items-start gap-4">
-                {exp.logo ? (
-                  <img src={exp.logo} alt={exp.company} className="w-10 h-10 object-contain shrink-0 mt-0.5 rounded" />
-                ) : (
-                  <div
-                    className={`${exp.badgeColor} w-10 h-10 flex items-center justify-center text-white font-extrabold text-xs shrink-0 mt-0.5 rounded`}
-                  >
-                    {exp.badge}
+
+        <div className="relative">
+          {/* Centered Vertical Line */}
+          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 -translate-x-1/2">
+            <div 
+              ref={lineRef}
+              className="absolute top-0 left-0 w-full h-full bg-gradient-to-bottom from-indigo-500 to-purple-600 origin-top"
+              style={{ transform: "scaleY(0)" }}
+            />
+          </div>
+
+          <div className="flex flex-col gap-12 md:gap-0">
+            {experiences.map((exp, i) => {
+              const isEven = i % 2 === 0;
+              return (
+                <div key={i} className={`relative flex flex-col md:flex-row items-center w-full mb-0 md:mb-16 ${isEven ? "md:flex-row-reverse" : ""}`}>
+                  
+                  {/* Content Space (Empty half on Desktop) */}
+                  <div className="hidden md:block w-1/2" />
+
+                  {/* Central Dot */}
+                  <div className="absolute left-[20px] md:left-1/2 top-6 md:top-1/2 w-4 h-4 rounded-full bg-black border-2 border-indigo-500 -translate-x-1/2 -translate-y-1/2 z-10 exp-dot" />
+
+                  {/* Content Card */}
+                  <div className={`w-full md:w-1/2 pl-12 md:pl-0 ${isEven ? "md:pr-12" : "md:pl-12"} exp-card-wrapper ${isEven ? "exp-left" : "exp-right"}`} style={{ perspective: "1000px" }}>
+                    <Magnetic strength={5}>
+                      <div className="exp-card border border-white/10 p-6 rounded-2xl bg-white/[0.03] backdrop-blur-md hover:border-indigo-500/50 transition-all duration-500 group hover:shadow-[0_0_40px_rgba(79,70,229,0.1)]">
+                        <div className="flex items-start gap-4">
+                          {exp.logo ? (
+                            <img src={exp.logo} alt={exp.company} className="w-12 h-12 object-contain shrink-0 rounded-lg bg-white/5 p-1 border border-white/10 shadow-inner" />
+                          ) : (
+                            <div className={`${exp.badgeColor} w-12 h-12 flex items-center justify-center text-white font-extrabold text-sm shrink-0 rounded-lg shadow-lg`}>
+                              {exp.badge}
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
+                              <span className="text-white font-bold text-lg tracking-tight group-hover:text-indigo-400 transition-colors">{exp.role}</span>
+                              <span className="text-gray-500 text-xs font-medium uppercase tracking-widest">{exp.period}</span>
+                            </div>
+                            <p className="text-gray-400 text-sm font-light mb-4">{exp.company}</p>
+                            <ul className="flex flex-col gap-3">
+                              {exp.bullets.map((bullet, j) => (
+                                <li key={j} className="text-gray-400 text-sm font-light flex gap-3 leading-relaxed group-hover:text-gray-300 transition-colors">
+                                  <span className="text-indigo-500 shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500/60 shadow-[0_0_8px_rgba(99,102,241,0.5)]"></span>
+                                  {bullet}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </Magnetic>
                   </div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
-                    <span className="text-white font-semibold text-sm">{exp.role}</span>
-                    <span className="text-gray-500 text-xs font-light shrink-0">{exp.period}</span>
-                  </div>
-                  <p className="text-gray-500 text-xs font-light italic mb-4">{exp.company}</p>
-                  <ul className="flex flex-col gap-2">
-                    {exp.bullets.map((bullet, j) => (
-                      <li key={j} className="text-gray-400 text-sm font-light flex gap-2 leading-relaxed">
-                        <span className="text-gray-600 shrink-0 mt-0.5">•</span>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

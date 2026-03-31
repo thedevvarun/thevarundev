@@ -6,41 +6,48 @@ export default function About() {
     const svgPaths = el.querySelectorAll(".about-image svg path, .about-image svg circle, .about-image svg rect");
     const strokePaths = el.querySelectorAll(".about-svg-stroke");
 
-    anime.set(el.querySelector(".about-image"), { opacity: 0, translateX: -60 });
-    anime.set(el.querySelectorAll(".about-title-char"), { translateY: "100%", opacity: 0 });
-    anime.set(el.querySelectorAll(".about-para"), { opacity: 0, translateY: 30 });
+    // Init state for jaw-dropping entrance
+    anime.set(el.querySelector(".about-image"), { opacity: 0, scale: 0.8, rotateY: -30, translateX: -60 });
+    anime.set(el.querySelectorAll(".about-title-char"), { translateY: "120%", opacity: 0, rotateZ: 15, skewX: 15 });
+    anime.set(el.querySelectorAll(".about-para"), { opacity: 0, translateY: 40, scale: 0.95 });
 
     const tl = anime.timeline({ easing: "easeOutExpo" });
 
-    // Image slides in
+    // Image pops in with 3d rotate
     tl.add({
       targets: el.querySelector(".about-image"),
       opacity: [0, 1],
+      scale: [0.8, 1],
+      rotateY: [-30, 0],
       translateX: [-60, 0],
-      duration: 1200,
-      easing: "easeOutCubic",
+      duration: 1400,
+      easing: "easeOutElastic(1, .8)",
     })
-    // Title chars cascade
+    // Title chars cascade and un-rotate
     .add({
       targets: el.querySelectorAll(".about-title-char"),
-      translateY: ["100%", "0%"],
+      translateY: ["120%", "0%"],
+      rotateZ: [15, 0],
+      skewX: [15, 0],
       opacity: [0, 1],
-      duration: 800,
+      duration: 900,
       delay: anime.stagger(30),
-    }, "-=800")
-    // Paragraphs stagger in
+      easing: "easeOutElastic(1, .8)"
+    }, "-=1000")
+    // Paragraphs stagger in with scale
     .add({
       targets: el.querySelectorAll(".about-para"),
       opacity: [0, 1],
-      translateY: [30, 0],
-      duration: 800,
+      translateY: [40, 0],
+      scale: [0.95, 1],
+      duration: 1000,
       delay: anime.stagger(150),
       easing: "easeOutCubic",
-    }, "-=400");
+    }, "-=600");
   });
 
   return (
-    <section id="about" className="py-24 bg-white" ref={ref}>
+    <section id="about" className="py-24 bg-white" ref={ref} style={{ perspective: "1000px" }}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center gap-16">
           {/* Left – Illustration */}

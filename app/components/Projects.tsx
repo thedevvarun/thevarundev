@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Magnetic from "./Magnetic";
 
 const ArrowIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -56,53 +57,58 @@ export default function Projects() {
               const imgDir = isEven ? -60 : 60;
               const contentDir = isEven ? 60 : -60;
 
-              anime.set(el.querySelector(".project-image"), { opacity: 0, translateX: imgDir });
-              anime.set(el.querySelector(".project-number"), { opacity: 0, translateY: 20, scale: 0.8 });
-              anime.set(el.querySelector(".project-title"), { opacity: 0, translateY: 20 });
-              anime.set(el.querySelector(".project-desc"), { opacity: 0, translateY: 20 });
-              anime.set(el.querySelectorAll(".project-tag"), { opacity: 0, scale: 0.8 });
-              anime.set(el.querySelector(".project-link"), { opacity: 0, translateX: -10 });
+              anime.set(el.querySelector(".project-image"), { opacity: 0, translateX: imgDir, rotateY: isEven ? -10 : 10, scale: 0.9 });
+              anime.set(el.querySelector(".project-number"), { opacity: 0, translateY: 40, scale: 0.5 });
+              anime.set(el.querySelector(".project-title"), { opacity: 0, translateY: 30, rotateX: 20 });
+              anime.set(el.querySelector(".project-desc"), { opacity: 0, translateY: 30 });
+              anime.set(el.querySelectorAll(".project-tag"), { opacity: 0, scale: 0.8, translateY: 10 });
+              anime.set(el.querySelector(".project-link-wrapper"), { opacity: 0, translateX: -20 });
 
-              const tl = anime.timeline({ easing: "easeOutCubic" });
+              const tl = anime.timeline({ easing: "easeOutElastic(1, .8)" });
 
               tl.add({
                 targets: el.querySelector(".project-image"),
                 opacity: [0, 1],
                 translateX: [imgDir, 0],
-                duration: 1000,
+                rotateY: [isEven ? -10 : 10, 0],
+                scale: [0.9, 1],
+                duration: 1600,
               })
               .add({
                 targets: el.querySelector(".project-number"),
                 opacity: [0, 1],
-                translateY: [20, 0],
-                scale: [0.8, 1],
-                duration: 600,
-              }, "-=700")
+                translateY: [40, 0],
+                scale: [0.5, 1],
+                duration: 1000,
+              }, "-=1200")
               .add({
                 targets: el.querySelector(".project-title"),
                 opacity: [0, 1],
-                translateY: [20, 0],
-                duration: 600,
-              }, "-=400")
+                translateY: [30, 0],
+                rotateX: [20, 0],
+                duration: 1000,
+              }, "-=1000")
               .add({
                 targets: el.querySelector(".project-desc"),
                 opacity: [0, 1],
-                translateY: [20, 0],
-                duration: 600,
-              }, "-=300")
+                translateY: [30, 0],
+                duration: 1000,
+                easing: "easeOutCubic"
+              }, "-=900")
               .add({
                 targets: el.querySelectorAll(".project-tag"),
                 opacity: [0, 1],
                 scale: [0.8, 1],
-                duration: 400,
-                delay: anime.stagger(60),
-              }, "-=300")
+                translateY: [10, 0],
+                duration: 800,
+                delay: anime.stagger(50),
+              }, "-=800")
               .add({
-                targets: el.querySelector(".project-link"),
+                targets: el.querySelector(".project-link-wrapper"),
                 opacity: [0, 1],
-                translateX: [-10, 0],
-                duration: 500,
-              }, "-=200");
+                translateX: [-20, 0],
+                duration: 800,
+              }, "-=700");
             });
             observer.unobserve(entry.target);
           }
@@ -126,11 +132,13 @@ export default function Projects() {
           import("animejs").then(({ default: anime }) => {
             anime({
               targets: el.querySelectorAll(".proj-title-char"),
-              translateY: ["100%", "0%"],
+              translateY: ["120%", "0%"],
+              rotateZ: [10, 0],
+              skewX: [10, 0],
               opacity: [0, 1],
-              duration: 800,
+              duration: 900,
               delay: anime.stagger(30),
-              easing: "easeOutExpo",
+              easing: "easeOutElastic(1, .8)",
             });
           });
           observer.disconnect();
@@ -212,13 +220,17 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
-                <a
-                  href={project.link}
-                  className="project-link inline-flex items-center gap-1 text-white hover:text-gray-300 transition-colors"
-                  aria-label={`View ${project.title}`}
-                >
-                  <ArrowIcon />
-                </a>
+                <div className="project-link-wrapper inline-block">
+                  <Magnetic strength={20}>
+                    <a
+                      href={project.link}
+                      className="project-link inline-flex items-center gap-1 text-white hover:text-gray-300 transition-colors p-2 -ml-2 rounded-full cursor-pointer hover:bg-white/5"
+                      aria-label={`View ${project.title}`}
+                    >
+                      <ArrowIcon />
+                    </a>
+                  </Magnetic>
+                </div>
               </div>
             </div>
           ))}
