@@ -1,7 +1,7 @@
 import { useScrollReveal } from "../hooks/useScrollReveal";
 
 const skills = [
-  { name: "JavaScript", logo: "/skills/javascript.svg", featured: true },
+  { name: "JavaScript", logo: "/skills/javascript.svg" },
   { name: "TypeScript", logo: "/skills/typescript.svg" },
   { name: "React", logo: "/skills/react.svg" },
   { name: "Next.JS", logo: "/skills/nextjs.svg" },
@@ -25,17 +25,6 @@ const skills = [
 
 export default function Skills() {
   const ref = useScrollReveal((anime, el) => {
-    // Heading letter animation
-    anime.set(el.querySelectorAll(".section-title-char"), {
-      translateY: "100%",
-      opacity: 0,
-    });
-    anime.set(el.querySelectorAll(".skill-card"), {
-      opacity: 0,
-      translateY: 40,
-      scale: 0.9,
-    });
-
     const tl = anime.timeline({ easing: "easeOutExpo" });
 
     tl.add({
@@ -61,14 +50,14 @@ export default function Skills() {
         <h2 className="text-4xl text-center text-black mb-10 overflow-hidden">
           <span className="inline-block overflow-hidden">
             {"My ".split("").map((char, i) => (
-              <span key={`a${i}`} className="section-title-char inline-block font-light">
+              <span key={`a${i}`} className="section-title-char inline-block font-light" style={{ opacity: 0, transform: "translateY(100%)" }}>
                 {char === " " ? "\u00A0" : char}
               </span>
             ))}
           </span>
           <span className="inline-block overflow-hidden">
             {"Skills".split("").map((char, i) => (
-              <span key={`b${i}`} className="section-title-char inline-block font-extrabold">
+              <span key={`b${i}`} className="section-title-char inline-block font-extrabold" style={{ opacity: 0, transform: "translateY(100%)" }}>
                 {char}
               </span>
             ))}
@@ -78,25 +67,15 @@ export default function Skills() {
           {skills.map((skill) => (
             <div
               key={skill.name}
-              className={`skill-card group border-2 rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 cursor-default ${
-                skill.featured
-                  ? "bg-black border-black"
-                  : "bg-white border-gray-200 hover:border-black hover:shadow-lg"
-              }`}
+              className="skill-card group border-2 rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-all duration-300 cursor-default bg-white border-gray-200 hover:border-black hover:shadow-lg"
+              style={{ opacity: 0, transform: "translateY(40px) scale(0.9)" }}
             >
               <img
                 src={skill.logo}
                 alt={skill.name}
-                className={`w-10 h-10 object-contain transition-all duration-300 ${
-                  skill.featured ? "" : "group-hover:scale-110"
-                }`}
-                style={skill.featured ? { filter: "invert(1)" } : undefined}
+                className="w-10 h-10 object-contain transition-all duration-300 group-hover:scale-110"
               />
-              <span
-                className={`text-sm font-bold text-center ${
-                  skill.featured ? "text-white" : "text-black"
-                }`}
-              >
+              <span className="text-sm font-bold text-center text-black">
                 {skill.name}
               </span>
             </div>

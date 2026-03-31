@@ -1,4 +1,5 @@
 import { useState } from "react";
+import LogoMark from "./LogoMark";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -7,9 +8,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="w-9 h-9 bg-black rounded-full flex items-center justify-center text-white font-extrabold text-sm select-none">
-          V
-        </div>
+        <LogoMark size={38} />
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">

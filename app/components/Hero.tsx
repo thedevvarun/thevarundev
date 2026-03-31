@@ -1,15 +1,17 @@
 import { useEffect, useRef } from "react";
 
 function SplitText({ text, className, charClass }: { text: string; className?: string; charClass?: string }) {
+  const words = text.split(" ");
   return (
     <span className={className}>
-      {text.split("").map((char, i) => (
-        <span
-          key={i}
-          className={`inline-block ${charClass || ""}`}
-          style={{ display: char === " " ? "inline" : "inline-block" }}
-        >
-          {char === " " ? "\u00A0" : char}
+      {words.map((word, wi) => (
+        <span key={wi} style={{ display: "inline-block" }}>
+          {word.split("").map((char, ci) => (
+            <span key={ci} className={`inline-block ${charClass || ""}`}>
+              {char}
+            </span>
+          ))}
+          {wi < words.length - 1 && " "}
         </span>
       ))}
     </span>
@@ -26,12 +28,11 @@ export default function Hero() {
       anime.set(".hero-engineer-box", { scaleX: 0, transformOrigin: "left center" });
       anime.set(".hero-engineer-text .hero-char", { translateY: "120%", opacity: 0 });
       anime.set([".hero-bio", ".hero-socials"], { opacity: 0, translateY: 30 });
-      anime.set(".hero-banner", { opacity: 0, scale: 0.85, translateX: 60 });
+      anime.set(".hero-banner", { opacity: 0, scale: 0.85, translateX: 40 });
       anime.set(".hero-divider", { scaleX: 0, transformOrigin: "left center" });
 
       const tl = anime.timeline({ easing: "easeOutExpo" });
 
-      // Line 1: "Hello I'm" characters cascade
       tl.add({
         targets: ".hero-line-1 .hero-char",
         translateY: ["120%", "0%"],
@@ -39,125 +40,116 @@ export default function Hero() {
         duration: 800,
         delay: anime.stagger(30, { start: 300 }),
       })
-      // Line 1: "Varun Dev." characters cascade
-      .add({
-        targets: ".hero-line-1-bold .hero-char",
-        translateY: ["120%", "0%"],
-        opacity: [0, 1],
-        duration: 800,
-        delay: anime.stagger(35),
-      }, "-=500")
-      // Line 2: "Full Stack" characters
-      .add({
-        targets: ".hero-line-2-text .hero-char",
-        translateY: ["120%", "0%"],
-        opacity: [0, 1],
-        duration: 800,
-        delay: anime.stagger(30),
-      }, "-=400")
-      // Line 2: Engineer box scales in
-      .add({
-        targets: ".hero-engineer-box",
-        scaleX: [0, 1],
-        duration: 600,
-        easing: "easeOutCubic",
-      }, "-=300")
-      // Line 2: "Engineer" text reveals inside box
-      .add({
-        targets: ".hero-engineer-text .hero-char",
-        translateY: ["120%", "0%"],
-        opacity: [0, 1],
-        duration: 600,
-        delay: anime.stagger(40),
-      }, "-=200")
-      // Line 3: "Based In" characters
-      .add({
-        targets: ".hero-line-3 .hero-char",
-        translateY: ["120%", "0%"],
-        opacity: [0, 1],
-        duration: 800,
-        delay: anime.stagger(30),
-      }, "-=400")
-      // Line 3: "India." bold characters
-      .add({
-        targets: ".hero-line-3-bold .hero-char",
-        translateY: ["120%", "0%"],
-        opacity: [0, 1],
-        duration: 800,
-        delay: anime.stagger(40),
-      }, "-=500")
-      // Bio paragraph fades up
-      .add({
-        targets: ".hero-bio",
-        translateY: [30, 0],
-        opacity: [0, 1],
-        duration: 1000,
-        easing: "easeOutCubic",
-      }, "-=400")
-      // Social icons stagger in
-      .add({
-        targets: ".hero-socials a",
-        translateY: [20, 0],
-        opacity: [0, 1],
-        duration: 600,
-        delay: anime.stagger(80),
-        easing: "easeOutCubic",
-      }, "-=600")
-      // Banner enters with elastic spring
-      .add({
-        targets: ".hero-banner",
-        opacity: [0, 1],
-        scale: [0.85, 1],
-        translateX: [60, 0],
-        duration: 1600,
-        easing: "easeOutElastic(1, 0.6)",
-      }, 400)
-      // Divider line draws
-      .add({
-        targets: ".hero-divider",
-        scaleX: [0, 1],
-        duration: 1200,
-        easing: "easeInOutQuart",
-      }, "-=800");
+        .add({
+          targets: ".hero-line-1-bold .hero-char",
+          translateY: ["120%", "0%"],
+          opacity: [0, 1],
+          duration: 800,
+          delay: anime.stagger(35),
+        }, "-=500")
+        .add({
+          targets: ".hero-line-2-text .hero-char",
+          translateY: ["120%", "0%"],
+          opacity: [0, 1],
+          duration: 800,
+          delay: anime.stagger(30),
+        }, "-=400")
+        .add({
+          targets: ".hero-engineer-box",
+          scaleX: [0, 1],
+          duration: 600,
+          easing: "easeOutCubic",
+        }, "-=300")
+        .add({
+          targets: ".hero-engineer-text .hero-char",
+          translateY: ["120%", "0%"],
+          opacity: [0, 1],
+          duration: 600,
+          delay: anime.stagger(40),
+        }, "-=200")
+        .add({
+          targets: ".hero-line-3 .hero-char",
+          translateY: ["120%", "0%"],
+          opacity: [0, 1],
+          duration: 800,
+          delay: anime.stagger(30),
+        }, "-=400")
+        .add({
+          targets: ".hero-line-3-bold .hero-char",
+          translateY: ["120%", "0%"],
+          opacity: [0, 1],
+          duration: 800,
+          delay: anime.stagger(40),
+        }, "-=500")
+        .add({
+          targets: ".hero-bio",
+          translateY: [30, 0],
+          opacity: [0, 1],
+          duration: 1000,
+          easing: "easeOutCubic",
+        }, "-=400")
+        .add({
+          targets: ".hero-socials a",
+          translateY: [20, 0],
+          opacity: [0, 1],
+          duration: 600,
+          delay: anime.stagger(80),
+          easing: "easeOutCubic",
+        }, "-=600")
+        .add({
+          targets: ".hero-banner",
+          opacity: [0, 1],
+          scale: [0.85, 1],
+          translateX: [40, 0],
+          duration: 1600,
+          easing: "easeOutElastic(1, 0.6)",
+        }, 400)
+        .add({
+          targets: ".hero-divider",
+          scaleX: [0, 1],
+          duration: 1200,
+          easing: "easeInOutQuart",
+        }, "-=800");
     });
   }, []);
 
   return (
-    <section ref={sectionRef} className="pt-20 pb-0 min-h-[92vh] flex items-center">
-      <div className="mx-auto px-6 w-full">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-16 relative min-h-[85vh]">
+    <section ref={sectionRef} className="pt-20 pb-0 min-h-screen flex items-center">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl">
+
+        <div className="relative flex flex-col lg:flex-row items-center gap-10 py-12 lg:py-0 lg:min-h-[85vh] lg:gap-0">
 
           {/* Left Content */}
-          <div className="absolute left-[8%]">
+          <div className="w-full lg:w-[58%] flex flex-col items-center lg:items-start text-center lg:text-left">
 
             {/* Line 1: Hello I'm Varun Dev. */}
-            <div className="overflow-hidden pb-1">
-              <div className="text-5xl lg:text-6xl xl:text-[5.5rem] tracking-tight leading-[1.1]">
+            <div className="overflow-hidden pb-1 w-full">
+              <div className="text-4xl sm:text-5xl lg:text-[3rem] xl:text-[4rem] tracking-tight leading-[1.1] lg:whitespace-nowrap">
                 <SplitText text="Hello I'm " className="hero-line-1 font-light text-black" charClass="hero-char" />
                 <SplitText text="Varun Dev." className="hero-line-1-bold font-extrabold text-black" charClass="hero-char" />
               </div>
             </div>
 
             {/* Line 2: Full Stack [Engineer] */}
-            <div className="overflow-hidden pb-1">
-              <div className="text-5xl lg:text-6xl xl:text-[5.5rem] tracking-tight leading-[1.1] flex items-baseline gap-3 flex-wrap">
+            <div className="overflow-hidden pb-1 w-full">
+              <div className="text-4xl sm:text-5xl lg:text-[3rem] xl:text-[3.5rem] tracking-tight leading-[1.1] flex items-baseline gap-2 sm:gap-3 flex-wrap lg:flex-nowrap justify-center lg:justify-start">
                 <SplitText text="Full Stack " className="hero-line-2-text font-extrabold text-black" charClass="hero-char" />
-                <span className="hero-engineer-box inline-flex border-2 border-black px-3 py-0.5">
+                <span className="hero-engineer-box inline-flex border-2 border-black px-2 sm:px-3 py-0.5">
                   <SplitText text="Engineer" className="hero-engineer-text text-outlined font-extrabold" charClass="hero-char" />
                 </span>
               </div>
             </div>
 
             {/* Line 3: Based In India. */}
-            <div className="overflow-hidden pb-2 mb-8">
-              <div className="text-5xl lg:text-6xl xl:text-[5.5rem] tracking-tight leading-[1.1]">
+            <div className="overflow-hidden pb-2 mb-6 sm:mb-8 w-full">
+              <div className="text-4xl sm:text-5xl lg:text-[3rem] xl:text-[3.5rem] tracking-tight leading-[1.1] lg:whitespace-nowrap">
                 <SplitText text="Based In " className="hero-line-3 font-light text-black" charClass="hero-char" />
                 <SplitText text="India." className="hero-line-3-bold font-extrabold text-black" charClass="hero-char" />
               </div>
             </div>
 
             {/* Bio */}
-            <p className="hero-bio text-gray-500 text-sm font-light leading-relaxed mb-8 max-w-md">
+            <p className="hero-bio text-gray-500 text-sm font-light leading-relaxed mb-8 max-w-md mx-auto lg:mx-0">
               Multi-stack engineer experienced in building and scaling technology
               solutions from scratch. Adept at solving complex architectural
               challenges, optimizing cloud infrastructure, and pushing
@@ -166,7 +158,7 @@ export default function Hero() {
             </p>
 
             {/* Social Icons */}
-            <div className="hero-socials flex items-center gap-3">
+            <div className="hero-socials flex items-center gap-3 justify-center lg:justify-start">
               <a
                 href="https://linkedin.com/in/varun-dev-sharma05197a198"
                 target="_blank"
@@ -200,7 +192,7 @@ export default function Hero() {
                 </svg>
               </a>
               <a
-                href="https://thedevvarun.in"
+                href="https://thevarundev.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Website"
@@ -216,13 +208,14 @@ export default function Hero() {
           </div>
 
           {/* Banner illustration */}
-          <div className="hero-banner flex justify-center items-center absolute right-[2%]">
+          <div className="hero-banner w-full lg:w-auto flex justify-center lg:flex-none">
             <img
-              className="h-[80vh] w-auto max-w-[50vw] object-contain"
+              className="h-[42vh] sm:h-[55vh] lg:h-[80vh] w-auto max-w-[88vw] lg:max-w-[46vw] object-contain"
               src="/svgs/banner.svg"
               alt="Hero Illustration"
             />
           </div>
+
         </div>
 
         {/* Divider */}
