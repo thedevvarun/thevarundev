@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "vcard": "node --experimental-strip-types scripts/gen-vcard.ts",
+    "prebuild": "npm run vcard",
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",

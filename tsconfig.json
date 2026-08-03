@@ -18,6 +18,9 @@
       "~/*": ["./app/*"]
     },
     "esModuleInterop": true,
+    // scripts/gen-vcard.ts runs through Node's type stripping, which resolves
+    // the literal specifier and so needs the .ts extension spelled out.
+    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
     "resolveJsonModule": true,

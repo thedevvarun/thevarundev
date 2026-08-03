@@ -98,3 +98,716 @@ section {
 nav a {
   cursor: none;
 }
+
+/* =====================================================================
+   Digital visiting card  —  /card
+   Dark, glass-on-black. Scoped under .vc-* so nothing here can leak into
+   the light-themed portfolio on /.
+   ===================================================================== */
+
+:root {
+  --vc-scroll: 0; /* 0 → 1, written by the Aurora scroll listener */
+}
+
+/* The page is dark edge to edge, including iOS overscroll rubber-banding. */
+html:has(.vc-root),
+html:has(.vc-root) body {
+  background: #07070b;
+}
+
+.vc-root {
+  position: relative;
+  min-height: 100svh;
+  background: #07070b;
+  color: #f4f3f7;
+  overflow-x: clip;
+}
+
+/* ---------- background ---------- */
+
+.vc-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.vc-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.vc-blob-1 {
+  top: -14%;
+  left: -22%;
+  width: 78vw;
+  height: 78vw;
+  max-width: 620px;
+  max-height: 620px;
+  background: radial-gradient(circle, rgba(232, 192, 122, 0.5), transparent 68%);
+  transform: translate3d(0, calc(var(--vc-scroll) * -90px), 0);
+  animation: vc-drift-a 22s ease-in-out infinite;
+}
+
+.vc-blob-2 {
+  top: 26%;
+  right: -30%;
+  width: 86vw;
+  height: 86vw;
+  max-width: 680px;
+  max-height: 680px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.42), transparent 68%);
+  transform: translate3d(0, calc(var(--vc-scroll) * -160px), 0);
+  animation: vc-drift-b 26s ease-in-out infinite;
+}
+
+.vc-blob-3 {
+  bottom: -18%;
+  left: 10%;
+  width: 70vw;
+  height: 70vw;
+  max-width: 540px;
+  max-height: 540px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.32), transparent 70%);
+  transform: translate3d(0, calc(var(--vc-scroll) * -60px), 0);
+  animation: vc-drift-a 30s ease-in-out infinite reverse;
+}
+
+@keyframes vc-drift-a {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 6% 4%; }
+}
+
+@keyframes vc-drift-b {
+  0%, 100% { translate: 0 0; }
+  50% { translate: -7% 5%; }
+}
+
+/* Fine grain keeps the big gradients from banding on OLED phones. */
+.vc-grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- scroll progress ---------- */
+
+.vc-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vc-progress-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(var(--vc-scroll));
+  background: linear-gradient(90deg, #e8c07a, #a855f7 55%, #6366f1);
+}
+
+/* ---------- surfaces ---------- */
+
+.vc-glass {
+  position: relative;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018) 42%, rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.08) inset,
+    0 30px 70px -30px rgba(0, 0, 0, 0.9);
+}
+
+.vc-hero-card {
+  padding: 26px 24px 28px;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+/* One slow sheen sweep on load, so the card reads as a physical surface. */
+.vc-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.13) 48%, transparent 60%);
+  translate: -120% 0;
+  animation: vc-sheen 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.9s both;
+}
+
+@keyframes vc-sheen {
+  to { translate: 120% 0; }
+}
+
+.vc-panel {
+  padding: 6px 4px;
+}
+
+/* ---------- monogram ---------- */
+
+.vc-monogram {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.vc-monogram-ring {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 0deg, #e8c07a, #7a5c2e 22%, #f7e3bd 48%, #6366f1 70%, #e8c07a 100%);
+  animation: vc-spin 6s linear infinite;
+}
+
+@keyframes vc-spin {
+  to { rotate: 360deg; }
+}
+
+.vc-monogram-face {
+  position: absolute;
+  inset: 1.5px;
+  display: grid;
+  place-items: center;
+  border-radius: 18.5px;
+  background: #0a0a0f;
+  color: #f7e3bd;
+}
+
+/* ---------- hero type ---------- */
+
+.vc-brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 192, 122, 0.28);
+  background: rgba(232, 192, 122, 0.09);
+  color: #f0d5a4;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.vc-brand-pill:hover {
+  background: rgba(232, 192, 122, 0.16);
+  border-color: rgba(232, 192, 122, 0.5);
+}
+
+.vc-name {
+  margin-top: 22px;
+  font-size: clamp(30px, 8.4vw, 38px);
+  line-height: 1.06;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+/* The mask each character slides up out of. */
+.vc-name-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+/*
+ * The gradient lives on the characters, not on the h1: `overflow: hidden` on
+ * the word above puts it in its own paint pass, and a background-clip:text
+ * gradient set on the h1 does not reach through it — the name renders blank.
+ * Every character box shares the same height, so a near-vertical gradient per
+ * character is indistinguishable from one across the whole line.
+ */
+.vc-name-char,
+.vc-name-space {
+  display: inline-block;
+  background: linear-gradient(178deg, #ffffff 22%, #b7b2c6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.vc-name-char {
+  will-change: transform, opacity;
+}
+
+.vc-hero-title {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(244, 243, 247, 0.66);
+  letter-spacing: 0.005em;
+}
+
+.vc-hero-meta {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.vc-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 11.5px;
+  font-weight: 300;
+  color: rgba(244, 243, 247, 0.6);
+}
+
+.vc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6ee7a8;
+  box-shadow: 0 0 0 0 rgba(110, 231, 168, 0.6);
+  animation: vc-pulse 2.4s ease-out infinite;
+}
+
+@keyframes vc-pulse {
+  70% { box-shadow: 0 0 0 7px rgba(110, 231, 168, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(110, 231, 168, 0); }
+}
+
+.vc-hero-tagline {
+  margin-top: 18px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  font-weight: 300;
+  color: rgba(244, 243, 247, 0.52);
+}
+
+/* ---------- primary CTA ---------- */
+
+.vc-save {
+  background: linear-gradient(140deg, #fbf1de, #e8c07a 55%, #d3a457);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.6) inset,
+    0 14px 34px -14px rgba(232, 192, 122, 0.75);
+}
+
+.vc-save:hover {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
+    0 18px 42px -14px rgba(232, 192, 122, 0.9);
+}
+
+.vc-save-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%);
+  translate: -120% 0;
+  animation: vc-sheen 3.4s cubic-bezier(0.22, 1, 0.36, 1) 1.8s infinite;
+}
+
+/* ---------- quick action tiles ---------- */
+
+.vc-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 13px 2px 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.035);
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s, background 0.3s;
+  will-change: transform, opacity;
+}
+
+.vc-tile:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.vc-tile:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+.vc-tile-glow {
+  position: absolute;
+  inset: auto auto -60% 50%;
+  translate: -50% 0;
+  width: 130%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 192, 122, 0.4), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.vc-tile:hover .vc-tile-glow {
+  opacity: 1;
+}
+
+.vc-tile-label {
+  position: relative;
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgba(244, 243, 247, 0.42);
+}
+
+/* ---------- section label ---------- */
+
+.vc-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-left: 4px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 247, 0.34);
+}
+
+.vc-eyebrow-line {
+  width: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(232, 192, 122, 0.9), transparent);
+}
+
+/* ---------- detail rows ---------- */
+
+.vc-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 14px;
+  border-radius: 20px;
+  transition: background 0.28s;
+}
+
+.vc-row + .vc-row {
+  box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.055);
+}
+
+.vc-row:hover {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.vc-row-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(244, 243, 247, 0.65);
+  transition: color 0.28s, border-color 0.28s;
+}
+
+.vc-row:hover .vc-row-icon {
+  color: #f0d5a4;
+  border-color: rgba(232, 192, 122, 0.35);
+}
+
+.vc-row-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 247, 0.34);
+}
+
+.vc-row-value {
+  display: block;
+  margin-top: 2px;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: rgba(244, 243, 247, 0.92);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vc-row-copy {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  color: rgba(244, 243, 247, 0.3);
+  transition: color 0.25s, background 0.25s;
+}
+
+.vc-row-copy:hover {
+  color: #f0d5a4;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ---------- feature blocks (company / product) ---------- */
+
+.vc-feature {
+  position: relative;
+  padding: 22px 22px 24px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s;
+  will-change: transform, opacity;
+}
+
+.vc-feature:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.17);
+}
+
+.vc-feature-glow {
+  position: absolute;
+  top: -55%;
+  right: -25%;
+  width: 82%;
+  height: 150%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 192, 122, 0.24), transparent 66%);
+  opacity: 0.75;
+  transition: opacity 0.45s;
+}
+
+.vc-feature-alt .vc-feature-glow {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.32), transparent 66%);
+}
+
+.vc-feature:hover .vc-feature-glow {
+  opacity: 1;
+}
+
+.vc-feature-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.vc-feature-tagline {
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-weight: 300;
+  font-style: italic;
+  color: #f0d5a4;
+}
+
+.vc-feature-alt .vc-feature-tagline {
+  color: #b3b5f8;
+}
+
+.vc-feature-body {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.66;
+  font-weight: 300;
+  color: rgba(244, 243, 247, 0.55);
+}
+
+.vc-feature-arrow {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(244, 243, 247, 0.55);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s, border-color 0.35s;
+}
+
+.vc-feature:hover .vc-feature-arrow {
+  transform: translate(2px, -2px);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.vc-feature-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: rgba(244, 243, 247, 0.38);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 2px;
+}
+
+.vc-chip {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(244, 243, 247, 0.62);
+  will-change: transform, opacity;
+}
+
+/* ---------- footer ---------- */
+
+.vc-ghost-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 12.5px;
+  font-weight: 400;
+  color: rgba(244, 243, 247, 0.68);
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+
+.vc-ghost-btn:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+}
+
+.vc-footnote {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 300;
+  color: rgba(244, 243, 247, 0.26);
+}
+
+/* ---------- sticky save bar ---------- */
+
+.vc-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, rgba(7, 7, 11, 0.96), rgba(7, 7, 11, 0.72) 65%, transparent);
+  translate: 0 130%;
+  opacity: 0;
+  transition: translate 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s;
+  pointer-events: none;
+}
+
+.vc-bar-on {
+  translate: 0 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.vc-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 10px 12px 10px 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(18, 18, 26, 0.82);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.95);
+}
+
+.vc-bar-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vc-bar-sub {
+  font-size: 10.5px;
+  font-weight: 300;
+  color: rgba(244, 243, 247, 0.42);
+}
+
+/* ---------- toast ---------- */
+
+.vc-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(104px + env(safe-area-inset-bottom));
+  z-index: 70;
+  translate: -50% 14px;
+  max-width: min(360px, calc(100vw - 32px));
+  padding: 11px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(24, 24, 33, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  text-align: center;
+  color: rgba(244, 243, 247, 0.92);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, translate 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vc-toast-on {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* ---------- focus + reduced motion ---------- */
+
+.vc-root a:focus-visible,
+.vc-root button:focus-visible {
+  outline: 2px solid #e8c07a;
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vc-blob,
+  .vc-sheen,
+  .vc-save-sheen,
+  .vc-monogram-ring,
+  .vc-dot {
+    animation: none !important;
+  }
+
+  .vc-hero-card,
+  .vc-tile,
+  .vc-feature {
+    transition: none !important;
+  }
+
+  .vc-sheen,
+  .vc-save-sheen {
+    display: none;
+  }
+}

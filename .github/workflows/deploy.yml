@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: "npm"
 
       - name: Install dependencies
@@ -35,6 +35,12 @@ jobs:
 
       - name: Copy CNAME to build output
         run: cp CNAME build/client/CNAME
+
+      # GitHub Pages has no rewrite rules: anything not prerendered would hit
+      # GitHub's own 404 page instead of the app. React Router emits an SPA
+      # shell for exactly this.
+      - name: Install SPA fallback as 404
+        run: cp build/client/__spa-fallback.html build/client/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
