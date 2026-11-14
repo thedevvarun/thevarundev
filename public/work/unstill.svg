@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wake" gradientUnits="userSpaceOnUse" x1="400" y1="678" x2="600" y2="145">
+      <stop offset="0%" stop-color="#5ee9c9" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#5ee9c9" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#5ee9c9" stop-opacity="0.05"/>
+    </linearGradient>
+    <radialGradient id="wakeGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#5ee9c9" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#5ee9c9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" rx="200" fill="#0a0e15"/>
+  <circle cx="233.33" cy="211.67" r="73.33" fill="url(#wakeGlow)"/>
+  <path d="M 233.33 211.67 L 233.33 511.67 C 233.33 685 566.67 685 566.67 511.67 L 566.67 171.67"
+        stroke="url(#wake)" stroke-width="34" stroke-linecap="round" fill="none"/>
+  <circle cx="233.33" cy="211.67" r="34" fill="#5ee9c9"/>
+  <circle cx="233.33" cy="211.67" r="34" fill="#ffffff" opacity="0.55"/>
+</svg>

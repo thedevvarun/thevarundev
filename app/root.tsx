@@ -9,14 +9,26 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import Cursor from "./components/Cursor";
 
-export const links: Route.LinksFunction = () => [];
+// Runs before first paint: restores a saved theme and skips the loading screen on repeat views.
+const BOOT = `try{var d=document.documentElement,t=localStorage.getItem("theme");if(t)d.dataset.theme=t;if(sessionStorage.getItem("seen"))d.classList.add("seen");sessionStorage.setItem("seen","1")}catch(e){}`;
+
+export const links: Route.LinksFunction = () => [
+  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap",
+  },
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: BOOT }} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
@@ -33,10 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <>
-      <Outlet />
-      <Cursor />
-    </>
+    <Outlet />
   );
 }
 

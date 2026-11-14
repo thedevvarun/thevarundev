@@ -21,8 +21,8 @@ export const profile = {
   emailPersonal: "varundev1007@gmail.com",
   website: "https://thevarundev.com",
   websiteLabel: "thevarundev.com",
-  linkedin: "https://linkedin.com/in/varun-dev-sharma05197a198",
-  linkedinLabel: "varun-dev-sharma",
+  linkedin: "https://www.linkedin.com/in/thedevvarun/",
+  linkedinLabel: "thedevvarun",
   github: "https://github.com/thedevvarun",
   githubLabel: "thedevvarun",
   whatsapp: "https://wa.me/918700506796",
@@ -41,8 +41,8 @@ export const company = {
 
 export const product = {
   name: "Unstill",
-  url: "https://unstill.frugalfounder.in",
-  domainLabel: "unstill.frugalfounder.in",
+  url: "https://gounstill.com",
+  domainLabel: "gounstill.com",
   tagline: "Concepts, unstilled.",
   description:
     "Type a concept, get an animated explainer video — real 3D scenes, narration and captions, rendered to MP4. Built by Frugal Founder.",

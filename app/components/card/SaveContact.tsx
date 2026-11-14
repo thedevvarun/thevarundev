@@ -44,23 +44,17 @@ export function SaveContactButton({ onNotify, className = "", compact = false }:
     saveContact();
     setSaved(true);
     onNotify?.("Contact card downloaded — open it to add Varun to your phone.");
-    const t = setTimeout(() => setSaved(false), 2600);
-    return () => clearTimeout(t);
+    setTimeout(() => setSaved(false), 2600);
   }, [onNotify]);
 
+  const size = compact ? 16 : 18;
+  const idle = compact ? "Save contact" : "Save to contacts";
+  const done = compact ? "Saved" : "Added to your downloads";
+
   return (
-    <button
-      type="button"
-      onClick={handle}
-      className={`vc-save group relative flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-2xl px-6 font-medium text-[#0b0b0f] transition-transform duration-300 active:scale-[0.98] ${
-        compact ? "h-11 text-[13px]" : "h-14 text-[15px]"
-      } ${className}`}
-    >
-      <span className="vc-save-sheen" aria-hidden />
-      <span className="relative flex items-center gap-2.5">
-        {saved ? <CheckIcon size={compact ? 16 : 18} /> : <DownloadIcon size={compact ? 16 : 18} />}
-        {saved ? "Added to your downloads" : "Save to contacts"}
-      </span>
+    <button type="button" onClick={handle} className={`btn btn-fill cd-save ${className}`}>
+      {saved ? <CheckIcon size={size} /> : <DownloadIcon size={size} />}
+      {saved ? done : idle}
     </button>
   );
 }
@@ -87,12 +81,7 @@ export function ShareButton({ onNotify, className = "" }: Props) {
   }, [onNotify]);
 
   return (
-    <button
-      type="button"
-      onClick={handle}
-      aria-label="Share this card"
-      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.04] text-white/70 transition-all duration-300 hover:border-white/25 hover:bg-white/[0.08] hover:text-white active:scale-[0.96] ${className}`}
-    >
+    <button type="button" onClick={handle} aria-label="Share this card" className={`cd-round ${className}`}>
       <ShareIcon size={19} />
     </button>
   );

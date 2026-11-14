@@ -1,6 +1,7 @@
 import type { Route } from "./+types/card";
 import VisitingCard from "../components/card/VisitingCard";
 import { company, product, profile } from "../data/profile";
+import "../card.css";
 
 const title = `${profile.fullName} — ${profile.title}`;
 const description = `Digital visiting card for ${profile.fullName}, ${profile.vcardTitle} at ${company.name}, building ${product.name}. Save the contact, call, or message in one tap.`;
@@ -10,7 +11,7 @@ export function meta({}: Route.MetaArgs) {
   return [
     { title },
     { name: "description", content: description },
-    { name: "theme-color", content: "#07070b" },
+    { name: "theme-color", content: "#f4f4f1" },
     { property: "og:type", content: "profile" },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
