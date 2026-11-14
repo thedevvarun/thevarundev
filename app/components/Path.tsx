@@ -313,8 +313,8 @@ export default function Path({ roles }: { roles: Role[] }) {
   };
 
   return (
-    <div className="path">
-      <div className="path-stage" data-in style={{ background: TINT[scene] }} onPointerMove={lean}>
+    <div className="path" data-in>
+      <div className="path-stage" style={{ background: TINT[scene] }} onPointerMove={lean}>
         <p className="path-hook" key={scene}>
           <span>{year}</span>
           <b>{hook}</b>

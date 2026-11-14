@@ -208,7 +208,7 @@ export default function AiLab() {
   const go = (i: number) => setAt((i + TOPICS.length) % TOPICS.length);
 
   return (
-    <div className="lab">
+    <div className="lab" data-in>
       <div className="lab-top">
         <div className="lab-orbit" role="tablist" aria-label="AI topics">
           <svg viewBox="0 0 100 100" aria-hidden="true">

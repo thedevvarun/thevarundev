@@ -168,7 +168,7 @@ export default function StackBox() {
   };
 
   return (
-    <div className="sbx">
+    <div className="sbx" data-in>
       <div className="sbx-tabs" role="tablist" aria-label="What to build">
         {BUILDS.map((x, i) => (
           <button key={x.id} type="button" role="tab" aria-selected={i === pick} onClick={() => choose(i)}>

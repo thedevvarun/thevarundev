@@ -180,6 +180,8 @@ body {
   transition-delay: calc(var(--d, 0) * 80ms);
 }
 .pf.fx [data-in].in { opacity: 1; transform: none; }
+/* Films inside a section hold their first frame until the section is on screen. */
+.pf.fx [data-in]:not(.in) *, .pf.fx [data-in]:not(.in) *::before, .pf.fx [data-in]:not(.in) *::after { animation-play-state: paused !important; }
 
 /* ---------- loading screen ---------- */
 
