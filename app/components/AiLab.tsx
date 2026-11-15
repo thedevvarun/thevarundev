@@ -113,7 +113,7 @@ const TOPICS: Topic[] = [
     name: "Model harness",
     layer: "Around the model",
     words: "Everything wrapped around the model: the prompt, the tools it may call, the loop, and the checks on what comes back.",
-    mine: "Unstill's pipeline is a harness. Brief in, strict schema, validator, repair, and only then a scene.",
+    mine: "UnStill's pipeline is a harness. Brief in, strict schema, validator, repair, and only then a scene.",
     links: [
       ["Claude Agent SDK", "https://docs.claude.com/en/api/agent-sdk/overview"],
       ["Claude Code", "https://docs.claude.com/en/docs/claude-code/overview"],
@@ -165,7 +165,7 @@ const TOPICS: Topic[] = [
     name: "Evals",
     layer: "Around the model",
     words: "Tests for work that has no single right answer. Without them, every prompt change is a guess.",
-    mine: "Unstill lints every generated scene before anyone sees it. That linter was my first eval.",
+    mine: "UnStill lints every generated scene before anyone sees it. That linter was my first eval.",
     links: [
       ["Demystifying evals for AI agents", "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"],
       ["Inspect", "https://inspect.aisi.org.uk/"],

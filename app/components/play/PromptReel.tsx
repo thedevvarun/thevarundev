@@ -8,7 +8,7 @@ const SHOTS = [
   ["Dyson sphere", "What is a Dyson sphere?", "dyson-sphere"],
 ];
 
-/** Pick a prompt, see a frame from the explainer Unstill made for it. Cycles on its own until touched. */
+/** Pick a prompt, see a frame from the explainer UnStill made for it. Cycles on its own until touched. */
 export default function PromptReel() {
   const [at, setAt] = useState(0);
   const [auto, setAuto] = useState(true);
@@ -35,7 +35,7 @@ export default function PromptReel() {
             key={file}
             className={i === at ? "on" : ""}
             src={`/media/unstill-${file}.webp`}
-            alt={`Frame from an Unstill explainer: ${name}`}
+            alt={`Frame from an UnStill explainer: ${name}`}
             width="800"
             height="450"
             loading="lazy"

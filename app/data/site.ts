@@ -33,13 +33,13 @@ const clip = (name: string, label: string): Clip => ({ src: `/media/${name}.mp4`
 export const products: Product[] = [
   {
     slug: "unstill",
-    name: "Unstill",
+    name: "UnStill",
     icon: "/work/unstill.svg",
     hue: "#5ee9c9",
     kind: "AI explainer engine",
     status: "Live",
     tag: "Type a concept. Get a living, narrated explainer.",
-    body: "Unstill turns a one-line prompt into an animated 3D explainer with narration and captions. The result is a small scene file played live by a purpose-built three.js engine, so it stays interactive in the browser and still exports to MP4.",
+    body: "UnStill turns a one-line prompt into an animated 3D explainer with narration and captions. The result is a small scene file played live by a purpose-built three.js engine, so it stays interactive in the browser and still exports to MP4.",
     built: [
       "A scene format that holds the scene graph, timeline and narrative in one file",
       "A generation pipeline that validates, lints and auto-repairs what the model writes before anyone sees it",
@@ -168,7 +168,7 @@ export const bench = [
   {
     name: "Learnerbite",
     note: "In build",
-    body: "A learning platform organised around a concept graph, with interactive Unstill scenes as lessons. Astro and Svelte in front of a Hono API on PostgreSQL.",
+    body: "A learning platform organised around a concept graph, with interactive UnStill scenes as lessons. Astro and Svelte in front of a Hono API on PostgreSQL.",
   },
 ];
 

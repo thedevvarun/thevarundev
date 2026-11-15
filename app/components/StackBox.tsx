@@ -93,7 +93,7 @@ const BUILDS: Build[] = [
   {
     id: "agent",
     tab: "An AI agent",
-    proof: "A real frame from Unstill, which runs this pipeline.",
+    proof: "A real frame from UnStill, which runs this pipeline.",
     parts: [
       ["nodejs", "Node.js"],
       ["claude", "Claude"],
@@ -112,7 +112,7 @@ const BUILDS: Build[] = [
         <p>
           <span>Prompt</span> How does mitosis work?
         </p>
-        <img src="/media/unstill-mitosis.webp" alt="A frame from the explainer Unstill generated for that prompt" width="800" height="450" loading="lazy" />
+        <img src="/media/unstill-mitosis.webp" alt="A frame from the explainer UnStill generated for that prompt" width="800" height="450" loading="lazy" />
         <div>
           <span className="sbx-chip">Schema checked</span>
           <span className="sbx-chip">Linted</span>

@@ -20,7 +20,7 @@ import { bench, cases, figures, kit, products, roles, studio, type Product } fro
 const SITE = "https://www.thevarundev.com";
 const title = "Varun Dev Sharma | Full-Stack and Flutter Engineer, Founder of Frugal Founder";
 const description =
-  "Varun Dev Sharma is a full-stack and Flutter engineer in New Delhi. Maker of Unstill, Trace and Flutter Wizard, and founder of the studio Frugal Founder.";
+  "Varun Dev Sharma is a full-stack and Flutter engineer in New Delhi. Maker of UnStill, Trace and Flutter Wizard, and founder of the studio Frugal Founder.";
 
 const jsonLd = {
   "@context": "https://schema.org",

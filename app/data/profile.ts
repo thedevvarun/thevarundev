@@ -40,7 +40,7 @@ export const company = {
 } as const;
 
 export const product = {
-  name: "Unstill",
+  name: "UnStill",
   url: "https://gounstill.com",
   domainLabel: "gounstill.com",
   tagline: "Concepts, unstilled.",

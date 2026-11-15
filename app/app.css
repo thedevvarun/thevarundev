@@ -582,7 +582,7 @@ a:hover > .arr, a:hover > * > .arr, .btn:hover .arr { translate: 2px -2px; }
 }
 .sort-swap:hover { background: var(--hue); color: #0c0d12; transform: translateX(-50%) scale(1.12); }
 
-/* Unstill prompts */
+/* UnStill prompts */
 .reel-stage { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; }
 .reel-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); transition: opacity 0.7s ease, transform 5s ease-out; }
 .reel-stage img.on { opacity: 1; transform: none; }
