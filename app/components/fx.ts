@@ -30,6 +30,8 @@ export function startFx(root: HTMLElement) {
     if (el.style.getPropertyValue(name) !== v) el.style.setProperty(name, v);
   };
 
+  // The headline squeeze re-lays out text every frame; phones scroll better without it.
+  const squeeze = !matchMedia("(pointer: coarse)").matches;
   let raf = 0;
   let lastY = scrollY;
   let vel = 0;
@@ -46,12 +48,14 @@ export function startFx(root: HTMLElement) {
 
     const vh = innerHeight;
     if (page) set(page, "--page", y / Math.max(1, document.documentElement.scrollHeight - vh));
-    for (const el of tracked) {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < -300 || r.top > vh + 300) continue;
-      if ("vel" in el.dataset) set(el, "--v", v);
+    // Measure everything before writing anything, so the frame lays out once.
+    const rects = tracked.map((el) => el.getBoundingClientRect());
+    tracked.forEach((el, i) => {
+      const r = rects[i];
+      if (r.bottom < -300 || r.top > vh + 300) return;
+      if (squeeze && "vel" in el.dataset) set(el, "--v", v);
       if ("p" in el.dataset) set(el, "--p", clamp((vh - r.top) / (vh + r.height)));
-    }
+    });
   };
   const wake = () => {
     dirty = true;

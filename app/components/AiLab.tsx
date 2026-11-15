@@ -151,7 +151,7 @@ const TOPICS: Topic[] = [
     name: "Agents",
     layer: "Around the model",
     words: "A model in a loop with tools. It decides, acts, reads the result and decides again until the job is done.",
-    mine: "MotionBox's AI director and Flutter Wizard AI keep the model on a short lead: it chooses, tested code does the work.",
+    mine: "FrugalEditor's AI director and Flutter Wizard AI keep the model on a short lead: it chooses, tested code does the work.",
     links: [["Building effective agents", "https://www.anthropic.com/engineering/building-effective-agents"]],
     glyph: (
       <g className="g-spin">
