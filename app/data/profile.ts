@@ -26,7 +26,7 @@ export const profile = {
   github: "https://github.com/thedevvarun",
   githubLabel: "thedevvarun",
   whatsapp: "https://wa.me/918700506796",
-  resume: "/VarunResumev5.pdf",
+  resume: "/VarunResumev6.pdf",
 } as const;
 
 export const company = {

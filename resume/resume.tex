@@ -1,0 +1,162 @@
+% Build: tectonic resume.tex   (output: resume.pdf, copied to VarunResumev6.pdf)
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper,left=36pt,right=36pt,top=30pt,bottom=30pt]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+
+% Poppins Italic is not on this machine, so the italic is the regular face slanted.
+\setmainfont{Poppins}[Path=fonts/,Extension=.ttf,UprightFont=*-Regular,BoldFont=*-Bold,ItalicFont=*-Regular,ItalicFeatures={FakeSlant=0.17},BoldItalicFont=*-Bold,BoldItalicFeatures={FakeSlant=0.17}]
+
+\definecolor{navy}{RGB}{45,55,72}
+\definecolor{slate}{RGB}{113,128,150}
+\definecolor{link}{RGB}{49,130,206}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\hyphenpenalty=600
+
+\titleformat{\section}{\large\bfseries\color{navy}}{}{0pt}{}[{\vspace{-1pt}\color{navy}\titlerule[0.5pt]}]
+\titlespacing*{\section}{0pt}{8.5pt}{2.5pt}
+
+\setlist[itemize]{leftmargin=9.5pt,labelsep=4pt,itemsep=1.2pt,parsep=0pt,topsep=5pt,partopsep=0pt,label={\raisebox{0.5pt}{\scriptsize\textbullet}}}
+
+\newcommand{\lk}[2]{\href{#1}{\color{link}#2}}
+\newcommand{\sep}{\hspace{11pt}|\hspace{11pt}}
+\newcommand{\role}[2]{\needspace{4\baselineskip}\textbf{\color{navy}#1}\hfill\textit{#2}\par}
+\newcommand{\org}[2]{\textbf{#1}#2\par}
+\newcommand{\gap}{\vspace{6.5pt}}
+\renewcommand{\b}[1]{\textbf{#1}}
+\newcommand{\stack}[1]{\textit{#1}}
+
+\begin{document}
+\small
+
+\begin{center}
+{\LARGE\bfseries\color{navy}VARUN DEV SHARMA}\par\vspace{2.5pt}
+{\normalsize\color{slate}Founder, Frugal Founder | Manager - SDE III | Team Lead}\par\vspace{5.5pt}
+\lk{https://thevarundev.com}{thevarundev.com}\sep\lk{https://www.frugalfounder.in}{frugalfounder.in}\sep\lk{https://github.com/thedevvarun}{github.com/thedevvarun}\sep\lk{https://www.linkedin.com/in/thedevvarun/}{linkedin.com/in/thedevvarun}\par\vspace{3pt}
+\lk{mailto:varundev1007@gmail.com}{varundev1007@gmail.com}\sep\lk{tel:+918700506796}{+91 8700506796}\par
+\end{center}
+\vspace{-7pt}
+
+\section{Summary}
+Multi-stack engineer and founder, experienced in building and scaling technology solutions from scratch. Leads engineering for EdTech products running on 500,000+ classroom devices, ships consumer apps to the App Store and Google Play, and serves startups as a fractional CTO through Frugal Founder. Adept at solving complex architectural challenges, optimizing cloud infrastructure and building AI-driven product pipelines.
+
+\section{Skills \& Technologies}
+\begin{tabular}{@{}p{72.2pt}@{}p{451pt}@{}}
+\b{Languages:} & TypeScript, JavaScript, Dart, Python, C++, Swift, Kotlin \\
+\b{Frameworks:} & React, Next.js, Astro, SvelteKit, React Native, Flutter, Flame, Node.js, NestJS, Fastify, Hono \\
+\b{Cloud \& DB:} & AWS, GCloud, Terraform, Docker, Kubernetes, PostgreSQL, MongoDB, Redis, Elasticsearch, Firebase, Supabase \\
+\b{Video \& 3D:} & FFmpeg, Widevine DRM, HLS, three.js, Remotion \\
+\b{AI Skills:} & LLM pipelines with validation and repair, AI Model Training, Text-to-Speech, Claude \& OpenAI APIs \\
+\b{Other:} & System Design, GitHub Actions, IaC, Jenkins \\
+\end{tabular}
+
+\section{Experience}
+\role{Founder \& Fractional CTO}{2025 – Present}
+\org{Frugal Founder}{ – Product Studio}
+\begin{itemize}
+\item \b{Fractional CTO:} Lead technology for Nephrocore Nexus, a kidney-care platform for patients, doctors and clinic staff: appointments, home lab tests, memberships, a doctor app for referrals and settlements, and the admin dashboard.
+\item \b{Client Delivery:} Shipped Pocketyards (real-estate platform built as one monorepo with its own design system, in production on AWS), evparkings (public site with a landowner lead and survey pipeline for EV charging) and Callus+ (flashcard app for orthopaedics students on iOS and Android with Firebase and in-app subscriptions, in beta).
+\item \b{Own Products:} Designed, built and launched UnStill, Trace and Flutter Wizard, with Algoplay and FrugalEditor in the pipeline (see Products).
+\item \b{Studio Services:} End-to-end web, mobile and backend development with infrastructure as code, fixed-price AWS cost reviews, and launch films built in code and rendered frame by frame.
+\end{itemize}
+\gap
+
+\role{Manager - Tech and Solutions}{2023 – Present}
+\org{iDream Education}{ – EdTech Industry}
+\begin{itemize}
+\item \b{Cloud \& Infrastructure:} Reduced AWS cloud costs by 40\% by migrating from on-demand to reserved instances based on traffic analysis.
+\item \b{Product Leadership:} Led development of iPrep Tizen (React) for Smart TVs and iPrep Digital Library, deploying to 10,000+ devices.
+\item \b{Internal Tooling \& AI:} Integrated AI model training pipelines; built custom FFmpeg compression/encoding, MP4 segmentation, and AES-256-CBC encryption tools.
+\item \b{Architecture:} Architected ``Content-as-API'' for B2B integrations; implemented Widevine DRM streaming for adaptive video loading.
+\end{itemize}
+\gap
+
+\role{Assistant Manager}{2022 – 2023}
+\org{iDream Education}{}
+\begin{itemize}
+\item \b{Project RISL:} Architected hybrid Edge-Cloud ecosystem for government initiatives. Built 3 custom frontends (Flutter/Next.js) and Node.js/PostgreSQL dual-backend with offline LAN syncing and secure telemetry caching.
+\item \b{Desktop Engineering:} Developed iPrep Digital Class for Windows/Linux, installed on 500,000+ devices (1M+ users). Engineered local Node.js backend streaming to 50 devices simultaneously.
+\end{itemize}
+\gap
+
+\role{Senior Software Engineer}{2021 – 2022}
+\org{iDream Education}{}
+\begin{itemize}
+\item \b{Web Development:} Architected iPrep Web App (Next.js) from scratch to 5,000+ DAU with LRU caching and custom adaptive video player.
+\item \b{Mobile Development:} Engineered iPrep Mobile App (Flutter) with event-driven BLOC architecture, scaling to 60,000+ downloads. Integrated pdfrx and Apple Payments.
+\end{itemize}
+\gap
+
+\role{Frontend Developer - React Native (Internship)}{Feb 2020 – Feb 2021}
+\org{Iraitech Pvt Ltd}{}
+\begin{itemize}
+\item Developed ``Desi Adda'', cross-platform event scheduling and e-sports app using React Native with SSO authentication.
+\end{itemize}
+
+\newpage
+\section{Products}
+\role{UnStill}{Live}
+\org{AI Explainer Engine}{ – \lk{https://gounstill.com}{gounstill.com}}
+\begin{itemize}
+\item Turns a one-line prompt into a narrated, animated 3D explainer, played live in the browser by a purpose-built three.js engine, with MP4 export through Remotion and a native Flutter player on OpenGL ES.
+\item Built a generation pipeline that validates, lints and auto-repairs model output before anyone sees it. \stack{Next.js, three.js, Remotion, Flutter, Supabase, AWS.}
+\end{itemize}
+\gap
+
+\role{Trace}{Live on iOS and Android}
+\org{Rhythm Game}{ – Every song secretly draws a picture}
+\begin{itemize}
+\item 60 levels, each with its own original song: tap on the beat at every corner and the finished route reveals a picture.
+\item Wrote a level generator that turns a picture into one continuous route, a beat-grid finder that snaps taps and holds to the track, and a game clock locked to the music. \stack{Flutter, Flame, SoLoud, Firebase, Python.}
+\end{itemize}
+\gap
+
+\role{Flutter Wizard}{Live on iOS and Android}
+\org{Learning App}{ – Learn Flutter by watching it move}
+\begin{itemize}
+\item Free Flutter course of 167 lessons in 20 tracks, with 20 real apps rebuilt screen by screen. Works fully offline from one codebase on iOS, Android, macOS, Windows, Linux and web.
+\item Built a data-driven motion engine (lesson visuals are JSON scenes) and a prerequisite graph of 161 concepts that unlocks lessons in order. \stack{Flutter, BLoC, Hive, Firebase, Cloud Functions.}
+\end{itemize}
+\gap
+
+\role{Algoplay}{Launching soon}
+\org{Learning App}{ – Data structures and algorithms, taught by showing}
+\begin{itemize}
+\item 560+ DSA problems as animated dry runs that pause before each key step and ask the learner to predict it, with spaced revision, arcade drills and a narration pipeline on open text-to-speech models. \stack{Flutter, Firebase, Hive, Python.}
+\end{itemize}
+\gap
+
+\role{FrugalEditor}{In development}
+\org{Video Editor}{ – Brand videos, made on the phone that posts them}
+\begin{itemize}
+\item Motion-design editor for iOS, Android, macOS and Windows: a deterministic animation engine where preview and export match pixel for pixel, on-device logo vectorization, native MP4 export in Swift and Kotlin, and an AI director that runs on the user's own model key. \stack{Flutter, Swift, Kotlin, Firebase.}
+\end{itemize}
+
+\section{Other Builds}
+\begin{itemize}
+\item \b{Frugal Billing POS:} Networked retail point of sale with per-unit barcodes, 80mm thermal receipts, live sync across terminals and a Pine Labs card adapter. In daily use at a live shop for over four months.
+\item \b{ExamForge:} Offline-first engine that turns a question bank into an exam-prep app with spaced repetition, mock exams and a readiness score. First app: Ham Radio Prep: Technician.
+\item \b{Flutter Wizard AI:} Prototype of a local Flutter app builder in which the model only selects and configures reviewed feature packs, so the output is readable code.
+\item \b{Learnerbite:} Learning platform organized around a concept graph, with interactive UnStill scenes as lessons (Astro, Svelte, Hono, PostgreSQL). In build.
+\end{itemize}
+
+\section{Workshops \& Training}
+\textbf{\color{navy}Mobile App Development Trainer} – TechGyan @ IIT Delhi\hfill\textit{2022}\par
+Trained 25 students in Mobile App Development using Flutter framework.
+
+\section{Education}
+\textbf{B.Tech in Computer Science Engineering}\hfill\textit{2018 – 2022}\par
+Maharaja Agrasen Institute of Technology, Delhi\par
+\gap
+\textbf{Senior Secondary Education}\hfill\textit{2015 – 2017}\par
+Kendriya Vidyalaya A.G.C.R
+
+\end{document}
